@@ -5,11 +5,11 @@ use futures::{StreamExt, executor};
 
 use crate::{
     dynamic_dispatch::{LogServiceDynamic, LoggerI32Dynamic, LoggerStringDynamic},
+    static_dispatch::any_type::logger_impl::LoggerStaticTypeGeneric,
+    static_dispatch::any_type::logger_trait::LogServiceTypeGeneric,
     static_dispatch::concrete_type::logger_impl_i32::LoggerI32Static,
     static_dispatch::concrete_type::logger_impl_string::LoggerStringStatic,
     static_dispatch::concrete_type::logger_trait::LoggerServiceTypeSpecific,
-    static_dispatch::generic_type::logger_impl::LoggerStaticTypeGeneric,
-    static_dispatch::generic_type::logger_trait::LogServiceTypeGeneric,
 };
 
 fn main() {
