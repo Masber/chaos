@@ -30,9 +30,9 @@ fn logger_static_dispatch_i32() {
 
     let logger = LoggerI32Static;
 
-    let fut_journald_logger = async { logger.get_log().await };
+    let fut_logger = async { logger.get_log().await };
 
-    let mut stream_values = executor::block_on(fut_journald_logger);
+    let mut stream_values = executor::block_on(fut_logger);
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
@@ -84,9 +84,9 @@ fn logger_dynamic_dispatch_i32() {
 
     let logger = LoggerI32Dynamic;
 
-    let fut_journald_logger = async { logger.get_log().await };
+    let fut_logger = async { logger.get_log().await };
 
-    let mut stream_values = executor::block_on(fut_journald_logger);
+    let mut stream_values = executor::block_on(fut_logger);
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
@@ -102,9 +102,9 @@ fn logger_dynamic_dispatch_string() {
 
     let logger = LoggerStringDynamic;
 
-    let fut_values_syslog = async { logger.get_log().await };
+    let fut_logger = async { logger.get_log().await };
 
-    let mut stream_values = executor::block_on(fut_values_syslog);
+    let mut stream_values = executor::block_on(fut_logger);
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
@@ -120,9 +120,9 @@ fn logger_dynamic_dispatch_any_type() {
 
     let logger = LoggerAnyTypeDynamic;
 
-    let fut_values_logger = async { LoggerAnyType::<String>::get_log(&logger).await };
+    let fut_logger = async { LoggerAnyType::<String>::get_log(&logger).await };
 
-    let mut stream_values = executor::block_on(fut_values_logger);
+    let mut stream_values = executor::block_on(fut_logger);
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
