@@ -1,16 +1,16 @@
 use futures::{Stream, stream};
 
-use crate::static_dispatch::any_type::logger_trait::LogServiceTypeGeneric;
+use crate::static_dispatch::any_type::logger_trait::LoggerAnyType;
 
-pub struct LoggerStaticTypeGeneric;
+pub struct Logger;
 
-impl LogServiceTypeGeneric<i32> for LoggerStaticTypeGeneric {
+impl LoggerAnyType<i32> for Logger {
     async fn get_log(&self) -> impl Stream<Item = i32> {
         stream::iter(1..=3)
     }
 }
 
-impl LogServiceTypeGeneric<String> for LoggerStaticTypeGeneric {
+impl LoggerAnyType<String> for Logger {
     async fn get_log(&self) -> impl Stream<Item = String> {
         stream::iter(vec![
             "Log entry A".to_string(),

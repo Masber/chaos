@@ -1,10 +1,10 @@
 use futures::{Stream, stream};
 
-use crate::static_dispatch::concrete_type::logger_trait::LoggerServiceTypeSpecific;
+use crate::static_dispatch::concrete_type::logger_trait::LoggerConcreteType;
 
-pub struct LoggerStringStatic;
+pub struct LoggerString;
 
-impl LoggerServiceTypeSpecific for LoggerStringStatic {
+impl LoggerConcreteType for LoggerString {
     type Item = String;
 
     async fn get_log(&self) -> impl Stream<Item = Self::Item> {

@@ -5,17 +5,19 @@ use futures::{StreamExt, executor};
 
 use crate::{
     dynamic_dispatch::{LogServiceDynamic, LoggerI32Dynamic, LoggerStringDynamic},
-    static_dispatch::any_type::logger_impl::LoggerStaticTypeGeneric,
-    static_dispatch::any_type::logger_trait::LogServiceTypeGeneric,
-    static_dispatch::concrete_type::logger_impl_i32::LoggerI32Static,
-    static_dispatch::concrete_type::logger_impl_string::LoggerStringStatic,
-    static_dispatch::concrete_type::logger_trait::LoggerServiceTypeSpecific,
+    static_dispatch::{
+        any_type::{logger_impl::Logger, logger_trait::LoggerAnyType},
+        concrete_type::{
+            logger_impl_i32::LoggerI32, logger_impl_string::LoggerString,
+            logger_trait::LoggerConcreteType,
+        },
+    },
 };
 
 fn main() {
     println!("Static Dispatch i32 Logger:");
 
-    let logger = LoggerI32Static;
+    let logger = LoggerI32;
 
     let fut_journald_logger = async { logger.get_log().await };
 
@@ -31,7 +33,7 @@ fn main() {
 
     println!("Static Dispatch String Logger:");
 
-    let logger = LoggerStringStatic;
+    let logger = LoggerString;
 
     let fut_logger = async { logger.get_log().await };
 
@@ -47,9 +49,9 @@ fn main() {
 
     println!("Static Dispatch Generic Logger:");
 
-    let logger = LoggerStaticTypeGeneric;
+    let logger = Logger;
 
-    let fut_logger = async { LogServiceTypeGeneric::<String>::get_log(&logger).await };
+    let fut_logger = async { LoggerAnyType::<String>::get_log(&logger).await };
 
     let mut stream_values = executor::block_on(fut_logger);
 
