@@ -5,7 +5,7 @@ Repo to experiment with crazy rust stuff.
 ## TODO
 
 1. ~~Create streams~~
-1. ~~Create logger˜˜
+1. ~~Create logger~~
 1. ~~Create static logger~~
 1. ~~Create dynamic logger~~
 1. ~~Make logger asynchronous~~
