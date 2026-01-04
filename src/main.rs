@@ -15,7 +15,7 @@ use crate::{
 };
 
 fn main() {
-    println!("Static Dispatch Logger:");
+    println!("Static Dispatch i32 Logger:");
 
     let logger = LoggerI32Static;
 
@@ -31,6 +31,8 @@ fn main() {
 
     executor::block_on(fut_logger_values);
 
+    println!("Static Dispatch String Logger:");
+
     let logger = LoggerStringStatic;
 
     let fut_logger = async { logger.get_log().await };
@@ -44,6 +46,8 @@ fn main() {
     };
 
     executor::block_on(fut_logger_values);
+
+    println!("Static Dispatch Generic Logger:");
 
     let logger = LoggerGenericStatic;
 
