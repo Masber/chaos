@@ -13,5 +13,5 @@ Repo to experiment with crazy rust stuff.
 1. ~Dynamic dispatch any type~
 1. ~Create a separate module for Stream~
 1. ~Reorganize Stream modules into submodules for static and dynamic dispatch~ Not needed because rust compiler can coerce from impl `Stream<Item=T>` to dyn `Stream<Item=T>`
-1. Migrate main from 'futures' to 'tokio'
+1. Migrate code in `fn main` from 'futures' to 'tokio' crate
 1. Introduce macros in main
