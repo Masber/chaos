@@ -1,17 +1,19 @@
 mod dynamic_dispatch;
-mod logger_generic_static_dispatch;
-mod logger_i32_static_dispatch;
-mod logger_string_static_dispatch;
-mod logger_trait;
+mod static_dispatch_generic_type_logger_impl;
+mod static_dispatch_generic_type_logger_trait;
+mod static_dispatch_specific_type_i32_logger_impl;
+mod static_dispatch_specific_type_logger_trait;
+mod static_dispatch_specific_type_string_logger_impl;
 
 use futures::{StreamExt, executor};
 
 use crate::{
     dynamic_dispatch::{LogServiceDynamic, LoggerI32Dynamic, LoggerStringDynamic},
-    logger_generic_static_dispatch::{LogService, LoggerGenericStatic},
-    logger_i32_static_dispatch::LoggerI32Static,
-    logger_string_static_dispatch::LoggerStringStatic,
-    logger_trait::LoggerService,
+    static_dispatch_generic_type_logger_impl::LoggerStaticTypeGeneric,
+    static_dispatch_generic_type_logger_trait::LogServiceTypeGeneric,
+    static_dispatch_specific_type_i32_logger_impl::LoggerI32Static,
+    static_dispatch_specific_type_logger_trait::LoggerServiceTypeSpecific,
+    static_dispatch_specific_type_string_logger_impl::LoggerStringStatic,
 };
 
 fn main() {
@@ -49,9 +51,9 @@ fn main() {
 
     println!("Static Dispatch Generic Logger:");
 
-    let logger = LoggerGenericStatic;
+    let logger = LoggerStaticTypeGeneric;
 
-    let fut_logger = async { LogService::<String>::get_log(&logger).await };
+    let fut_logger = async { LogServiceTypeGeneric::<String>::get_log(&logger).await };
 
     let mut stream_values = executor::block_on(fut_logger);
 

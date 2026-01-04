@@ -1,18 +1,16 @@
 use futures::{Stream, stream};
 
-pub trait LogService<Item> {
-    fn get_log(&self) -> impl Future<Output = impl Stream<Item = Item>> + Send;
-}
+use crate::static_dispatch_generic_type_logger_trait::LogServiceTypeGeneric;
 
-pub struct LoggerGenericStatic;
+pub struct LoggerStaticTypeGeneric;
 
-impl LogService<i32> for LoggerGenericStatic {
+impl LogServiceTypeGeneric<i32> for LoggerStaticTypeGeneric {
     async fn get_log(&self) -> impl Stream<Item = i32> {
         stream::iter(1..=3)
     }
 }
 
-impl LogService<String> for LoggerGenericStatic {
+impl LogServiceTypeGeneric<String> for LoggerStaticTypeGeneric {
     async fn get_log(&self) -> impl Stream<Item = String> {
         stream::iter(vec![
             "Log entry A".to_string(),
