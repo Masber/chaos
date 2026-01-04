@@ -4,12 +4,17 @@ mod static_dispatch;
 use futures::{StreamExt, executor};
 
 use crate::{
-    dynamic_dispatch::{LogServiceDynamic, LoggerI32Dynamic, LoggerStringDynamic},
+    dynamic_dispatch::concrete_type::{
+        logger_impl_i32::LoggerI32 as LoggerI32Dynamic,
+        logger_trait::LoggerConcreteType as LoggerConcreteTypeDynamic,
+        logget_impl_string::LoggerString as LoggerStringDynamic,
+    },
     static_dispatch::{
         any_type::{logger_impl::Logger, logger_trait::LoggerAnyType},
         concrete_type::{
-            logger_impl_i32::LoggerI32, logger_impl_string::LoggerString,
-            logger_trait::LoggerConcreteType,
+            logger_impl_i32::LoggerI32 as LoggerI32Static,
+            logger_impl_string::LoggerString as LoggerStringStatic,
+            logger_trait::LoggerConcreteType as LoggerConcreteTypeStatic,
         },
     },
 };
@@ -17,7 +22,7 @@ use crate::{
 fn main() {
     println!("Static Dispatch i32 Logger:");
 
-    let logger = LoggerI32;
+    let logger = LoggerI32Static;
 
     let fut_journald_logger = async { logger.get_log().await };
 
@@ -33,7 +38,7 @@ fn main() {
 
     println!("Static Dispatch String Logger:");
 
-    let logger = LoggerString;
+    let logger = LoggerStringStatic;
 
     let fut_logger = async { logger.get_log().await };
 
