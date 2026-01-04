@@ -8,7 +8,7 @@ Repo to experiment with crazy rust stuff.
 1. ~~Create logger~~
 1. ~~Create static logger~~
 1. ~~Create dynamic logger~~
-1. ~~Make logger asynchronous~~
+1. ~~Make logger async~~
 1. ~~Organise code in modules~~
 1. Dynamic dispatch any type
 1. Create a separate module for Stream
