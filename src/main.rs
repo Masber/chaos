@@ -10,7 +10,10 @@ use crate::{
         logget_impl_string::LoggerString as LoggerStringDynamic,
     },
     static_dispatch::{
-        any_type::{logger_impl::Logger, logger_trait::LoggerAnyType},
+        any_type::{
+            logger_impl::Logger as LoggerAnyType,
+            logger_trait::LoggerAnyType as LoggerAnyTypeStatic,
+        },
         concrete_type::{
             logger_impl_i32::LoggerI32 as LoggerI32Static,
             logger_impl_string::LoggerString as LoggerStringStatic,
@@ -19,7 +22,7 @@ use crate::{
     },
 };
 
-fn main() {
+fn logger_static_dispatch_i32() {
     println!("Static Dispatch i32 Logger:");
 
     let logger = LoggerI32Static;
@@ -35,7 +38,9 @@ fn main() {
     };
 
     executor::block_on(fut_logger_values);
+}
 
+fn logger_static_dispatch_string() {
     println!("Static Dispatch String Logger:");
 
     let logger = LoggerStringStatic;
@@ -51,12 +56,14 @@ fn main() {
     };
 
     executor::block_on(fut_logger_values);
+}
 
+fn logger_static_dispatch_any_type() {
     println!("Static Dispatch Generic Logger:");
 
-    let logger = Logger;
+    let logger = LoggerAnyType;
 
-    let fut_logger = async { LoggerAnyType::<String>::get_log(&logger).await };
+    let fut_logger = async { LoggerAnyTypeStatic::<String>::get_log(&logger).await };
 
     let mut stream_values = executor::block_on(fut_logger);
 
@@ -67,7 +74,9 @@ fn main() {
     };
 
     executor::block_on(fut_logger_values);
+}
 
+fn logger_dynamic_dispatch() {
     println!("Dynamic Dispatch Logger:");
 
     let logger = LoggerI32Dynamic;
@@ -97,4 +106,14 @@ fn main() {
     };
 
     executor::block_on(fut_logger_values);
+}
+
+fn main() {
+    logger_static_dispatch_i32();
+
+    logger_static_dispatch_string();
+
+    logger_static_dispatch_any_type();
+
+    logger_dynamic_dispatch();
 }
