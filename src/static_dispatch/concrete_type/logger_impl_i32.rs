@@ -1,6 +1,6 @@
 use futures::{Stream, stream};
 
-use crate::static_dispatch_specific_type_logger_trait::LoggerServiceTypeSpecific;
+use crate::static_dispatch::concrete_type::logger_trait::LoggerServiceTypeSpecific;
 
 pub struct LoggerI32Static;
 

@@ -1,6 +1,6 @@
 use futures::{Stream, stream};
 
-use crate::static_dispatch_generic_type_logger_trait::LogServiceTypeGeneric;
+use crate::static_dispatch::generic_type::logger_trait::LogServiceTypeGeneric;
 
 pub struct LoggerStaticTypeGeneric;
 

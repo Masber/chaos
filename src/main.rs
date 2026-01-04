@@ -1,19 +1,15 @@
 mod dynamic_dispatch;
-mod static_dispatch_generic_type_logger_impl;
-mod static_dispatch_generic_type_logger_trait;
-mod static_dispatch_specific_type_i32_logger_impl;
-mod static_dispatch_specific_type_logger_trait;
-mod static_dispatch_specific_type_string_logger_impl;
+mod static_dispatch;
 
 use futures::{StreamExt, executor};
 
 use crate::{
     dynamic_dispatch::{LogServiceDynamic, LoggerI32Dynamic, LoggerStringDynamic},
-    static_dispatch_generic_type_logger_impl::LoggerStaticTypeGeneric,
-    static_dispatch_generic_type_logger_trait::LogServiceTypeGeneric,
-    static_dispatch_specific_type_i32_logger_impl::LoggerI32Static,
-    static_dispatch_specific_type_logger_trait::LoggerServiceTypeSpecific,
-    static_dispatch_specific_type_string_logger_impl::LoggerStringStatic,
+    static_dispatch::concrete_type::logger_impl_i32::LoggerI32Static,
+    static_dispatch::concrete_type::logger_impl_string::LoggerStringStatic,
+    static_dispatch::concrete_type::logger_trait::LoggerServiceTypeSpecific,
+    static_dispatch::generic_type::logger_impl::LoggerStaticTypeGeneric,
+    static_dispatch::generic_type::logger_trait::LogServiceTypeGeneric,
 };
 
 fn main() {
