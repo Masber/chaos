@@ -4,15 +4,18 @@ mod static_dispatch;
 use futures::{StreamExt, executor};
 
 use crate::{
-    dynamic_dispatch::concrete_type::{
-        logger_impl_i32::LoggerI32 as LoggerI32Dynamic,
-        logger_trait::LoggerConcreteType as LoggerConcreteTypeDynamic,
-        logget_impl_string::LoggerString as LoggerStringDynamic,
+    dynamic_dispatch::{
+        any_type::{logger_trait::LoggerAnyType, logget_impl::LoggerAnyTypeDynamic},
+        concrete_type::{
+            logger_impl_i32::LoggerI32 as LoggerI32Dynamic,
+            logger_trait::LoggerConcreteType as LoggerConcreteTypeDynamic,
+            logget_impl_string::LoggerString as LoggerStringDynamic,
+        },
     },
     static_dispatch::{
         any_type::{
-            logger_impl::Logger as LoggerAnyType,
-            logger_trait::LoggerAnyType as LoggerAnyTypeStatic,
+            logger_impl::Logger as LoggerAnyTypeStatic,
+            logger_trait::LoggerAnyType as LoggerTraitAnyTypeStatic,
         },
         concrete_type::{
             logger_impl_i32::LoggerI32 as LoggerI32Static,
@@ -33,7 +36,7 @@ fn logger_static_dispatch_i32() {
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
-            println!("Value: {:?}", value);
+            println!("Value: {value:?}");
         }
     };
 
@@ -51,7 +54,7 @@ fn logger_static_dispatch_string() {
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
-            println!("Value: {:?}", value);
+            println!("Value: {value:?}");
         }
     };
 
@@ -59,25 +62,25 @@ fn logger_static_dispatch_string() {
 }
 
 fn logger_static_dispatch_any_type() {
-    println!("Static Dispatch Generic Logger:");
+    println!("Static Dispatch any type Logger:");
 
-    let logger = LoggerAnyType;
+    let logger = LoggerAnyTypeStatic;
 
-    let fut_logger = async { LoggerAnyTypeStatic::<String>::get_log(&logger).await };
+    let fut_logger = async { LoggerTraitAnyTypeStatic::<String>::get_log(&logger).await };
 
     let mut stream_values = executor::block_on(fut_logger);
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
-            println!("Value: {:?}", value);
+            println!("Value: {value:?}");
         }
     };
 
     executor::block_on(fut_logger_values);
 }
 
-fn logger_dynamic_dispatch() {
-    println!("Dynamic Dispatch Logger:");
+fn logger_dynamic_dispatch_i32() {
+    println!("Dynamic Dispatch i32 Logger:");
 
     let logger = LoggerI32Dynamic;
 
@@ -87,11 +90,15 @@ fn logger_dynamic_dispatch() {
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
-            println!("Value: {:?}", value);
+            println!("Value: {value:?}");
         }
     };
 
     executor::block_on(fut_logger_values);
+}
+
+fn logger_dynamic_dispatch_string() {
+    println!("Dynamic Dispatch String Logger:");
 
     let logger = LoggerStringDynamic;
 
@@ -101,7 +108,25 @@ fn logger_dynamic_dispatch() {
 
     let fut_logger_values = async {
         while let Some(value) = stream_values.next().await {
-            println!("Value: {:?}", value);
+            println!("Value: {value:?}");
+        }
+    };
+
+    executor::block_on(fut_logger_values);
+}
+
+fn logger_dynamic_dispatch_any_type() {
+    println!("Dynamic Dispatch any type Logger:");
+
+    let logger = LoggerAnyTypeDynamic;
+
+    let fut_values_logger = async { LoggerAnyType::<String>::get_log(&logger).await };
+
+    let mut stream_values = executor::block_on(fut_values_logger);
+
+    let fut_logger_values = async {
+        while let Some(value) = stream_values.next().await {
+            println!("Value: {value:?}");
         }
     };
 
@@ -115,5 +140,9 @@ fn main() {
 
     logger_static_dispatch_any_type();
 
-    logger_dynamic_dispatch();
+    logger_dynamic_dispatch_i32();
+
+    logger_dynamic_dispatch_string();
+
+    logger_dynamic_dispatch_any_type();
 }
